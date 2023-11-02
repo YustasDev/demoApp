@@ -1,0 +1,12 @@
+
+server:
+  port: 5000
+
+
+api.key: my-api-key
+api.secret: my-secret
+
+
+capacity.requests: 1
+
+
