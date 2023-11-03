@@ -7,6 +7,6 @@ api.key: my-api-key
 api.secret: my-secret
 
 
-capacity.requests: 1
+capacity.requests: 3
 
 

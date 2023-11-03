@@ -20,7 +20,7 @@ public class LimitConroller {
 
     public LimitConroller(@Value("${capacity.requests}") long capacity) {
         //Bandwidth limit = Bandwidth.classic(capacity, Refill.greedy(capacity, Duration.ofMinutes(1)));
-        Bandwidth limit = Bandwidth.classic(capacity, Refill.greedy(capacity, Duration.ofSeconds(1)));
+        Bandwidth limit = Bandwidth.classic(capacity, Refill.greedy(capacity, Duration.ofMinutes(1)));
         this.bucket = Bucket.builder()
                 .addLimit(limit)
                 .build();
@@ -37,6 +37,17 @@ public class LimitConroller {
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("TOO_MANY_REQUESTS");
     }
 
+
+    @CrossOrigin
+    @GetMapping("/get_another_data")
+    ResponseEntity<?> getAnotherData() {
+        String my_data = "it's another OK";
+
+        if (bucket.tryConsume(1)) {
+            return ResponseEntity.status(HttpStatus.OK).body(my_data);
+        }
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("TOO_MANY_REQUESTS");
+    }
 
 
 }
