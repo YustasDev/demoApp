@@ -2,6 +2,7 @@ package com.example.demoapp.aop_clacces;
 
 
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,11 @@ public class LoggingAspect {
         System.out.println("Произошел вызов метода getAnotherData()");
     }
 
+
+    @Around("execution(* *.lostMethod(..))")
+    public void logAroundTransfer(){
+        System.out.println("Произошел вызов метода lostMethod(..)");
+    }
 
 
 

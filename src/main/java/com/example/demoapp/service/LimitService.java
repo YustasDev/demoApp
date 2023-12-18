@@ -15,6 +15,10 @@ public class LimitService {
         return data1;
     }
 
+    public String lostMethod(String data2){
+        return data2;
+    }
+
 
 
 }
