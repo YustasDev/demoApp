@@ -1,8 +1,10 @@
 package com.example.demoapp.controllers;
 
+import com.example.demoapp.service.LimitService;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ public class LimitConroller {
 
     private final Bucket bucket;
 
+    @Autowired
+    private LimitService limitService;
+
     public LimitConroller(@Value("${capacity.requests}") long capacity) {
         //Bandwidth limit = Bandwidth.classic(capacity, Refill.greedy(capacity, Duration.ofMinutes(1)));
         Bandwidth limit = Bandwidth.classic(capacity, Refill.greedy(capacity, Duration.ofMinutes(1)));
@@ -30,6 +35,8 @@ public class LimitConroller {
     @GetMapping("/get_data")
     ResponseEntity<?> getData() {
         String my_data = "it's OK";
+        String receiveData = limitService.forGetData("13");
+        System.out.println(receiveData);
 
         if (bucket.tryConsume(1)) {
             return ResponseEntity.status(HttpStatus.OK).body(my_data);
@@ -42,6 +49,8 @@ public class LimitConroller {
     @GetMapping("/get_another_data")
     ResponseEntity<?> getAnotherData() {
         String my_data = "it's another OK";
+        String receiveData1 = limitService.forAnoterGetData();
+        System.out.println(receiveData1);
 
         if (bucket.tryConsume(1)) {
             return ResponseEntity.status(HttpStatus.OK).body(my_data);
