@@ -15,7 +15,7 @@ public class LimitService {
         return data1;
     }
 
-    public String lostMethod(String data2){
+    public Integer lostMethod(Integer data2){
         return data2;
     }
 

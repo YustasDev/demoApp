@@ -38,7 +38,7 @@ public class LimitConroller {
         String receiveData = limitService.forGetData("13");
         System.out.println(receiveData);
 
-        String lostStr = limitService.lostMethod("42");
+        Integer lostStr = limitService.lostMethod(13);
         System.err.println(lostStr);
 
         if (bucket.tryConsume(1)) {
