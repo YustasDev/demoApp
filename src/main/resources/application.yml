@@ -10,3 +10,16 @@ api.secret: my-secret
 capacity.requests: 3
 
 
+gateway:
+    publicEndpoints:
+        /api/v1/example,
+        /api/v1/another-example
+#      - "mm"
+#      - "kl"
+
+
+
+SHELLs: dhsjhgjhgd
+
+
+

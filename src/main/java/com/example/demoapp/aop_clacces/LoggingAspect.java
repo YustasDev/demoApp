@@ -16,19 +16,24 @@ public class LoggingAspect {
     private LimitService limitService;
 
     @Before("execution(* *.forGetData(..))")
-    public void logBeforeTransfer(){
+    private void logBeforeTransfer(){
         System.out.println("Произошел вызов метода getData()");
+    }
+
+    @AfterThrowing("execution(* com.example.demoapp.service.LimitService.forGetData(..))")
+    private void rollback() {
+        System.out.println("Произошла ошибка при выполнении LimitService.forGetData()");
     }
 
 
     @After("execution(* *.forAnoterGetData())")
-    public void logAfterTransfer(){
+    private void logAfterTransfer(){
         System.out.println("Произошел вызов метода getAnotherData()");
     }
 
 
     @Around("execution(public * com.example.demoapp.service.LimitService.lostMethod(..))")
-    public Object around(ProceedingJoinPoint joinPoint) throws Throwable{
+    private Object around(ProceedingJoinPoint joinPoint) throws Throwable{
 
         Integer retVal = (Integer) joinPoint.proceed();
         Object obj = joinPoint.getArgs();

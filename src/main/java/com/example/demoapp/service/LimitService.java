@@ -1,13 +1,16 @@
 package com.example.demoapp.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-import org.springframework.stereotype.Component;
-
-@Component
+@Service
 public class LimitService {
 
     public String forGetData(String data){
-        return data;
+        if(data.length() == 0){
+        throw new RuntimeException("It's RuntimeException");}
+        else {
+        return data;}
     }
 
     public String forAnoterGetData(){

@@ -6,6 +6,7 @@ import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
+import java.util.List;
 
 
 @RestController
@@ -22,6 +24,9 @@ public class LimitConroller {
 
     @Autowired
     private LimitService limitService;
+
+//    @Value("${gateway.publicEndpoints}")
+//    private List<String> arrEndPoint;
 
     public LimitConroller(@Value("${capacity.requests}") long capacity) {
         //Bandwidth limit = Bandwidth.classic(capacity, Refill.greedy(capacity, Duration.ofMinutes(1)));
@@ -35,7 +40,15 @@ public class LimitConroller {
     @GetMapping("/get_data")
     ResponseEntity<?> getData() {
         String my_data = "it's OK";
-        String receiveData = limitService.forGetData("13");
+
+//            String x1 = arrEndPoint.get(0);
+//            String x2 = arrEndPoint.get(1);
+//            System.out.println(x1);
+//            System.out.println(x2);
+
+        System.out.println(System.getenv("SHELL"));
+
+        String receiveData = limitService.forGetData("");
         System.out.println(receiveData);
 
         Integer lostStr = limitService.lostMethod(13);
