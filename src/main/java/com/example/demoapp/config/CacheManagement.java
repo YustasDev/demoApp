@@ -1,0 +1,30 @@
+package com.example.demoapp.config;
+
+import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.caffeine.CaffeineCache;
+import org.springframework.cache.support.SimpleCacheManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import java.time.Duration;
+import java.util.Arrays;
+
+
+
+@Configuration
+public class CacheManagement extends CachingConfigurerSupport {
+
+    @Bean("my-cache-manager")
+    @Override
+    public CacheManager cacheManager(){
+        SimpleCacheManager cacheManager = new SimpleCacheManager();
+        cacheManager.setCaches(Arrays.asList(
+                new CaffeineCache("cache1", Caffeine.newBuilder().expireAfterWrite(Duration.ofMillis(600000)).build()),
+                new CaffeineCache("cache2", Caffeine.newBuilder().expireAfterWrite(Duration.ofMillis(600000)).build())
+        ));
+        return cacheManager;
+    }
+
+}

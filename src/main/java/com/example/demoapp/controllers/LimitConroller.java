@@ -42,6 +42,7 @@ public class LimitConroller {
 
         if(i>= 0) {
             double cacheData = limitService.getIntData(i);
+            limitService.checkCache(i);
             return ResponseEntity.status(HttpStatus.OK).body("Квадратный корень из: '" + i + "' равен '" + cacheData + "'");
         }
         else {

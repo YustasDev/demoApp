@@ -38,6 +38,11 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+
 <!--        https://www.baeldung.com/spring-cache-tutorial-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
