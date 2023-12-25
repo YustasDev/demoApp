@@ -7,17 +7,16 @@ import io.github.bucket4j.Refill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.time.Duration;
 import java.util.List;
 
 
 @RestController
+@EnableCaching
 public class LimitConroller {
 
     private final Bucket bucket;
@@ -36,6 +35,20 @@ public class LimitConroller {
                 .build();
     }
 
+
+    @CrossOrigin
+    @PostMapping("/getCacheData")
+    ResponseEntity<?> getCacheData(@RequestParam(name = "intFor_sqrt", required = false) int i){
+
+        if(i>= 0) {
+            double cacheData = limitService.getIntData(i);
+            return ResponseEntity.status(HttpStatus.OK).body("Квадратный корень из: '" + i + "' равен '" + cacheData + "'");
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Значение поступившей переменной <0");
+        }
+    }
+
     @CrossOrigin
     @GetMapping("/get_data")
     ResponseEntity<?> getData() {
@@ -48,11 +61,13 @@ public class LimitConroller {
 
         System.out.println(System.getenv("SHELL"));
 
-        String receiveData = limitService.forGetData("");
+        String receiveData = limitService.forGetData("1");
         System.out.println(receiveData);
 
         Integer lostStr = limitService.lostMethod(13);
         System.err.println(lostStr);
+
+
 
         if (bucket.tryConsume(1)) {
             return ResponseEntity.status(HttpStatus.OK).body(my_data);
